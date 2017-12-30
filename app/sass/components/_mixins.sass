@@ -1,0 +1,113 @@
+/*Mixins*/
+
+// width
+=r($width)
+  @media only screen and (max-width: $width + "px")
+    @content
+
+=rmin($width)
+  @media only screen and (min-width: $width + "px")
+    @content
+
+// height
+=rh($height)
+  @media only screen and (max-height: $height + "px")
+    @content
+
+=rhmin($height)
+  @media only screen and (min-height: $height + "px")
+    @content
+
+// font-family 
+=font($alias, $name)
+  @font-face
+    font-family: $alias
+    src: url("../fonts/" + $name + ".woff") format("woff")
+    font-weight: normal
+    font-style: normal
+
+=hover
+  .no-touch &:hover
+    @content
+
+//simple gradient
+=g($color1, $color2)
+  background-image: linear-gradient($color1, $color2)
+
+=gh($color1, $color2)
+  background-image: linear-gradient(left, $color1, $color2)
+
+=cover
+  background-repeat: no-repeat
+  background-size: cover
+  background-position: 50% 50%
+
+// TRANSITION
+
+=tr($what)
+  transition: $what
+
+=trans($what: all, $dur: 0.2s, $easing: ease)
+  transition: $what $dur $easing
+
+=hide-text
+  font: 0/0 a
+  text-shadow: none
+  color: transparent
+
+=hidetext
+  +hide-text
+
+=placeholder-color($color)
+  &::placeholder
+    color: $color
+
+=placeholder
+  &::placeholder
+    @content
+
+// vertical-align at center
+=vcenter
+  position: absolute
+  top: 50%
+  left: 50%
+  transform: translate(-50%,-50%)
+
+=fcenter
+    display: -webkit-flex
+    display: -moz-flex
+    display: -ms-flex
+    display: -o-flex
+    display: flex
+    flex-direction: column
+    align-items: center
+    justify-content: center
+
+=rotate($var)
+  transform: rotate($var+deg)
+
+=blur($var)
+  filter: blur($var)
+
+=better-blur($radius)
+  filter: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='a' x='0' y='0' width='1' height='1' color-interpolation-filters='sRGB'%3E%3CfeGaussianBlur stdDeviation='#{$radius}' result='b'/%3E%3CfeMorphology operator='dilate' radius='#{$radius}'/%3E %3CfeMerge%3E%3CfeMergeNode/%3E%3CfeMergeNode in='b'/%3E%3C/feMerge%3E%3C/filter%3E %3C/svg%3E#a")
+  
+=scale($var)
+  transform: scale($var)
+
+// @include transition(all .2s ease-in-out);
+=border-radius($radius)
+    -webkit-border-radius: $radius
+    -moz-border-radius: $radius
+    -ms-border-radius: $radius
+    -o-border-radius: $radius
+    border-radius: $radius
+
+//background transparency
+=transparent($color, $alpha)
+    $rgba: rgba($color, $alpha)
+    $ie-hex-str: ie-hex-str($rgba)
+    background-color: transparent
+    background-color: $rgba
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#{$ie-hex-str}, endColorstr=#{$ie-hex-str})
+    zoom: 1
